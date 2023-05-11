@@ -2,6 +2,10 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const cors = require("cors");
+
+const app = express();
+app.use(cors());
 
 ///////////////////////////////////////////
 /////////   CHARACTERRS PART ROUTES ////////////
@@ -10,13 +14,13 @@ const axios = require("axios");
 router.get("/characters", async (req, res) => {
   try {
     // Query filters:  name, limit and skip -
-    const name = req.query.name;
-    const limit = req.query.limit || 100;
-    const skip = req.query.skip || 0;
+    const name = req.query.name || "";
+    const limit = req.query.limit || "100";
+    const skip = req.query.skip || "0";
 
     // Request Characters from API
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API}&limit${limit}&skip${skip}&name${name}`
+      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.API_KEY}&name=${name}&skip=${skip}&limit=${limit}`
     );
     const characters = response.data;
     res.status(200).json(characters);
@@ -51,7 +55,7 @@ router.get("/comics", async (req, res) => {
 
     // Request Comics from the API
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API}&limit=${limit}&skip=${skip}&title${title}`
+      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.API_KEY}&title=${title}&skip=${skip}&limit=${limit}`
     );
 
     const comics = response.data;
