@@ -8,7 +8,7 @@ app.use(cors());
 
 mongoose.connect(process.env.MONGODB_URI);
 const marvelRoute = require("./routes/marvel");
-const userRoute = require("./models/User");
+const userRoute = require("./routes/user");
 app.use(marvelRoute);
 app.use(userRoute);
 
