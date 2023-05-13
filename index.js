@@ -4,13 +4,14 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const app = express();
+app.use(express.json());
 app.use(cors());
 
 mongoose.connect(process.env.MONGODB_URI);
-const marvelRoute = require("./routes/marvel");
-const userRoute = require("./routes/user");
-app.use(marvelRoute);
-app.use(userRoute);
+const marvel = require("./routes/marvel");
+const user = require("./routes/user");
+app.use(marvel);
+app.use(user);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Welcome to Marvel API" });
